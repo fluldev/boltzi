@@ -26,8 +26,8 @@ Details on the commandline options can be found within src/main.cpp.
 
 ## Building
 
-The compilation of boltzi requires external dependencies given in doc/libraries.md that might require modification of the CMakeLists.txt in the directory to build successfully.
-I recommend creating a directory called "build" in this directory and then execute:
+The compilation of boltzi requires external dependencies given in doc/libraries.md that might require modification of the CMakeLists.txt in the root directory to build successfully.
+I recommend creating a directory called "build" in the root directory and then execute:
 ```bash
 cd build
 cmake ..
@@ -40,6 +40,10 @@ Python3 scripts within scripts/ and visualization/ require the libraries given i
 pip3 install -r requirements.txt
 ```
 
+## Compilation flags
+
+There are several defines that change the behaviour of the simulation and add tracing information. A description of those defines can be found in doc/defines.md and
+must be set through the appropriate entries in the CMakeLists.txt in the root directory.
 
 ## Tests
 
