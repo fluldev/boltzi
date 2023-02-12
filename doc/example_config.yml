@@ -1,0 +1,114 @@
+##########################################################################################
+# This config file is used to define the simulation boltzi should execute                #
+# and must adhere to the rules of the yaml-file format: https://yaml.org/                #
+# The only other ressource needed is a Wavefront-format (.obj) file defining the sample. #
+# Further information on the latter can be found in:                                     #
+#   doc/object_naming_language.md                                                        #
+#   doc/sample_invariants.md                                                             #
+##########################################################################################
+
+
+simulation: nonlinear  # The type of DSMC-simulation.
+                       # Options are: "nonlinear", "linear" which stands 
+                       # for normal DSMC and linearized DSMC respectively.
+
+effective_phonons: 5e31  # N_eff in the papers. Is the amount of actual 
+                         # phonons that ist represented by one simulated phonon.
+
+sample: 
+  type: simple  # Sample type. Should be simple for a sample comprising only one material.
+                # Different settings are not implemented yet.
+  file: obj/tube.obj  # Path to sample model file used. 
+  scale: 1e-3  # Factor with which the sample gets scaled. This is an optional attribute.
+               # Artifacts are stored in the original scale for compatibility with the model file.
+
+resolution:  # The amount of isothermal grid-cells along the x-, y- and z-direction used to calculate 
+             # the internal temperature of the sample in the simulation. 
+  x: 20
+  y: 3
+  z: 3
+
+init_temperature: 10  # Expression giving the temperature T 
+                      # as a function of the position T(x,y,z). 
+deviational_temperature: (1+x)/2+10 # Expression giving the deviational temperature T_dev
+                            # as a function of the position T_dev(x,y,z). 
+
+zero_gradient: false  # Set this to true if a homogenous deviational_temperature is used.
+                     # Otherwise it must be set to false. This attribute is optional and false by default.
+
+time: 20  # Total simulation time.
+time_step: 5e-3  # Time step delta t used in the simulation.
+boundary_current_binwidth: 5e-3 # Rate at which heat current through boundaries gets measured. Is optional, default is time_step.
+                                # For nonlinear simulation time_step will always be used an this parameter has no meaning.
+
+materials:  # List of materials in the sample.
+- example_material:  # Arbitrary name used to identify the material.
+    branches:  # List of dispersion relation branches in this material.
+      - linear_dispersion:  # Dispersion branch type.
+                            # Options are: "linear_dispersion" only for now.
+                            # linear_dispersion needs the phonon group velocity of this branch "velocity"
+                            # and the debye temperature (or debye frequency) of this branch "debye_temperature"/"debye_frequency" as parameters.
+          velocity: 1
+          debye_frequency: 300e11
+                                   # Paramters used by all types of dispersion branches:
+          three_phonon_processes:  # List of three-phonon scatter process types.
+                                   # Options are: "parametric" and "parametric_exp".
+                                   # parametric is a scatter process with scatter rate:
+                                   # tau^{-1}(|\vec k|,T) = fit_constant |\vec k|^wavevector_power T^temperature_power
+                                   # parametric_exp is a scatter process with scatter rate:
+                                   # tau^{-1}(|\vec k|,T) = fit_constant |\vec k|^wavevector_power T^temperature_power exp(-exp_constant/T)
+                                   # exp_constant is a optional attribute that defaults to: 
+                                   # reduced_planck_constant * debye_frequency / boltzmann_constant (Klemens-Umklapp model).
+                                   # All three phonon processes have the optional attribute "is_umklapp", which should be set to true in 
+                                   # case of an umklapp-process. The default value is false.
+            - parametric_exp:
+                fit_constant: 15e-28
+                wavevector_power: 2
+                temperature_power: 2
+                exp_constant: 10
+                is_umklapp: true
+
+          two_phonon_processes:  # List of two-phonon scatter process types.
+                                 # Options are: "parametric" and "parametricexp".
+                                 # parametric is a scatter process with scatter rate:
+                                 # tau^{-1}(|\vec k|,T) = fit_constant |\vec k|^wavevector_power T^temperature_power
+                                 # parametric_exp is a scatter process with scatter rate:
+                                 # tau^{-1}(|\vec k|,T) = fit_constant |\vec k|^wavevector_power T^temperature_power exp(-exp_constant/T)
+                                 # exp_constant is a optional attribute that defaults to: 
+                                 # reduced_planck_constant * debye_frequency / boltzmann_constant (Klemens-Umklapp model).
+            - parametric_exp:
+                fit_constant: 15e-27
+                wavevector_power: 2
+                temperature_power: 0
+          
+
+artifacts:  # List of artifacts sampled by the simulation.
+            # Artifacts are physical quantities which are
+            # sampled on a evenly spaced grid over the 
+            # entire bounding box of the sample.
+            # Options are (meaning is self-explanatory): 
+            # "temperature", "heatcurrent", "meanfreepath", "meanfreetime", "internalenergydensity" and "simulatedphonons".
+            # All of them take the time "time" when they will be sampled
+            # as parameter, a optional filename (defaults to the type) 
+            # and the resolution of the grid in x-, y- and z-direction.
+- temperature: 
+    time: 19.0
+    resolution: 
+      x: 20 
+      y: 5 
+      z: 5
+
+- heatcurrent:
+    name: configheat
+    time: 19.0
+    resolution:
+      x: 20 
+      y: 5 
+      z: 5
+
+- meanfreetime: 
+    time: 19.0
+    resolution: 
+      x: 3 
+      y: 10 
+      z: 10

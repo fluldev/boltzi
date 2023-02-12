@@ -1,0 +1,63 @@
+# test binarys
+tests/build/
+# cmake junk
+build/
+
+# drawio
+doc/*.bkp
+doc/*.dtmp
+doc/html
+doc/latex
+*.bkp
+*.dtmp
+
+# cmake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# output from tests
+*.out.csv
+# boltzi artifacts
+*.boltzi_artifact
