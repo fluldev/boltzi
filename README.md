@@ -26,7 +26,13 @@ with supplemental information like where the phonons originated.
 Scripts for the visualization and evaluation of the artifacts and boundary heat
 currents can be found within the directory visualization/ and scripts/.
 
-Details on the commandline options can be found within src/main.cpp.
+Details on the commandline options can be found within src/main.cpp
+in the function help_msg() or by compiling the program and starting it with --help.
+
+The simulation is intended to be easily extensible for different kinds of sample
+surfaces and non homogenous materials, polycrystals and so on. This is why each
+facility of the simulation is implemented by a separate abstract class that
+defines all interfaces needed to communicate with other components.
 
 [1]: PÉRAUD, Jean-Philippe M.; LANDON, Colin D.; HADJICONSTANTINOU, Nicolas G. Monte Carlo methods for solving the Boltzmann transport equation. Annual Review of Heat Transfer, 2014, 17. Jg.
 

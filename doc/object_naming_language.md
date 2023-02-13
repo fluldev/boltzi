@@ -9,7 +9,7 @@ Surface properties and regions within the sample are set by the names
 of the objects.
 A name of an object is structured like a function call. It consists out
 of the property name followed by parameters seperated by commata.
-This specific string can be embedded within a diffrent string which
+This specific string can be embedded within a different string which
 identifies the object in the file.
 
 ## Types of Boundaries
@@ -27,7 +27,7 @@ Include:
 - [x] OBJ Objects
 
 Transform:
-- Scale = 1.0 (Scaling should be done in the simulation configuration.)
+- Scale = 1.0 (scaling should be done in the simulation configuration.)
 - Forward = Y Forward
 - UP = Z Up
 

@@ -7,6 +7,7 @@ Libraries, required to build *boltzi*:
 - [OBJ-Loader](https://github.com/Bly7/OBJ-Loader)
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [exprtk](https://github.com/ArashPartow/exprtk)
+
 Optional:
 - [Tables-and-Graphs](https://github.com/tdulcet/Tables-and-Graphs) needed for `-DBOLTZI_DASHBOARD`
   compile as libtablengraph.a containing tables.o and graphs.o
